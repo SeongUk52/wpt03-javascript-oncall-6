@@ -18,11 +18,16 @@ class WorkDateRepository {
     static DAY_OF_THE_WEEK = [
       '월', '화', '수', '목', '금', '토', '일'
     ];
+    static SPECIAL_HOLIDAY = [
+        [0], [1], [], [1], [], [5], [6], [], [15], [], [3, 9], [], [25]
+    ];
 
     #workDates;
+    #month
 
     constructor(month, startDayOfTheWeek) {
-        this.#workDates = []
+        this.#workDates = [];
+        this.#month = month;
 
         const daysInMonth = WorkDateRepository.DAYS_IN_MONTH[month - 1];
         const startIndex = WorkDateRepository.DAY_OF_THE_WEEK.indexOf(startDayOfTheWeek);
@@ -36,6 +41,17 @@ class WorkDateRepository {
 
     }
 
+    findWorkdays() {
+        return this.#workDates
+            .filter(i => !i.isWeekEnd)
+            .filter(i => !WorkDateRepository.SPECIAL_HOLIDAY[this.#month].includes(i))
+    }
+
+    findHolidays() {
+        return this.#workDates
+            .filter(i => i.isWeekEnd)
+            .filter(i => WorkDateRepository.SPECIAL_HOLIDAY[this.#month].includes(i))
+    }
 }
 
 export default WorkDateRepository;
