@@ -1,5 +1,6 @@
 class WorkDate{
-    #worker;
+    #workdayWorkOrder;
+    #holidayWorkOrder;
     #dayOfTheWeek;
 
     constructor(dayOfTheWeek) {
